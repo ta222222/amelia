@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>amelia site plain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            margin: 0;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 75%;
+            max-width: 40rem; /* Set max width in rem */
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem; /* Padding around carousel */
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images {
+            display: flex;
+            width: 100%;
+        }
+
+        .carousel-slide {
+            width: 100%;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Show only the active slide */
+        .carousel-slide.active {
+            display: block;
+        }
+
+        /* Remove the previous and next buttons */
+        button {
+            display: none;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem; /* Adjust dot spacing using rem */
+        }
+
+        .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .active {
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                width: 95%;
+                padding: 1rem; /* Adjust padding for smaller screens */
+            }
+
+            .carousel-dots {
+                gap: 0.8rem; /* Adjust spacing for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-images">
+                <div class="carousel-slide"><img src="https://thimk.wordpress.com/files/2008/08/the-source-may-1990.jpg" alt="Image 1"></div>
+                <div class="carousel-slide"><img src="https://stordis.com/wp-content/uploads/2023/05/Switch2Open-S-QSFP-100G-DR-100G-DR-Universal-QSFP28-Transceiver.webp" alt="Image 2"></div>
+                <div class="carousel-slide"><img src="https://c8.alamy.com/comp/2X3XDNC/los-angeles-usa-28th-apr-2024-amelia-gray-arrives-at-the-daily-front-rows-8th-annual-fashion-los-angeles-awards-held-at-the-beverly-hills-hotel-in-beverly-hills-ca-on-sunday-april-28-2024-photo-by-sthanlee-b-miradorsipa-usa-credit-sipa-usaalamy-live-news-2X3XDNC.jpg" alt="Image 3"></div>
+            </div>
+        </div>
+
+        <!-- Dots positioned below the images -->
+        <div class="carousel-dots">
+            <div class="dot" onclick="goToSlide(0)"></div>
+            <div class="dot" onclick="goToSlide(1)"></div>
+            <div class="dot" onclick="goToSlide(2)"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const dots = document.querySelectorAll('.dot');
+
+        function moveSlide(direction) {
+            currentSlide += direction;
+
+            // Loop the slide
+            if (currentSlide >= totalSlides) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = totalSlides - 1;
+            }
+
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            // Hide all slides and remove active class from dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            // Show the current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Highlight the active dot
+            dots[currentSlide].classList.add('active');
+        }
+
+        // Initialize the first dot as active
+        updateCarousel();
+
+        // Keyboard event listener to control carousel with left and right arrow keys
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                moveSlide(-1); // Move to previous slide
+            } else if (event.key === 'ArrowRight') {
+                moveSlide(1); // Move to next slide
+            }
+        });
+    </script>
+</body>
+</html>
